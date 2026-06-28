@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Toko Pakaian Kalcer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <span class="logo" onclick="scrollToSection('beranda')">👕 Toko Pakaian Kalcer 👚</span>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('beranda')">Beranda</a></li>
+    <li><a onclick="scrollToSection('produk')">Produk</a></li>
+    <li><a onclick="scrollToSection('cara-pesan')">Cara Pesan</a></li>
+    <li><a onclick="scrollToSection('kontak')">Kontak</a></li>
+    <li><button class="profil-nav-btn" id="profil-nav-btn" onclick="toggleProfilPage()">👤 Profil</button></li>
+    <li><a onclick="bukaKeranjang()" class="cart-btn">🛒 Keranjang <span class="cart-count" id="cart-count">0</span></a></li>
+  </ul>
+</nav>
+
+<!-- ===== KONTEN UTAMA ===== -->
+<div id="main-content">
+
+  <!-- HERO -->
+  <section id="beranda" class="hero">
+    <div class="hero-teks">
+      <h1>Bukan Sekadar Pakaian,<br/>Ini Statement Lo! 🔥</h1>
+      <p>Tampil stylish dengan fashion kekinian dan kualitas premium. Gratis ongkir untuk pembelian di atas Rp 250.000!</p>
+      <a onclick="scrollToSection('produk')" class="tombol" style="cursor:pointer">Belanja Sekarang</a>
+    </div>
+    <div class="hero-img">👗</div>
+  </section>
+
+  <!-- PRODUK -->
+  <section id="produk" style="background:#fff">
+    <h2>Produk Kami</h2>
+    <p class="subjudul">Fashion trendi untuk semua gaya 😎</p>
+    <div class="produk-grid" id="produk-grid"></div>
+  </section>
+
+  <!-- CARA PESAN -->
+  <section id="cara-pesan" class="cara-pesan-bg">
+    <h2>Cara Pemesanan</h2>
+    <p class="subjudul">Mudah, cepat, dan aman!</p>
+    <ol class="langkah-list">
+      <li><strong>Pilih Produk</strong><p>Klik produk, pilih ukuran dan jumlah yang kamu inginkan.</p></li>
+      <li><strong>Masuk Keranjang</strong><p>Tambahkan ke keranjang dan lanjut ke checkout.</p></li>
+      <li><strong>Bayar</strong><p>Pilih metode pembayaran yang paling nyaman buatmu.</p></li>
+      <li><strong>Dikirim! 🚚</strong><p>Pakaianmu siap dikirim dan bisa dilacak real-time.</p></li>
+    </ol>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" style="background:#fff">
+    <h2>Hubungi Kami 📞</h2>
+    <p class="subjudul">Ada pertanyaan? Kirim pesan di bawah ini.</p>
+    <div class="kontak-wrap">
+      <div class="kontak-info">
+        <h3>Informasi Toko</h3>
+        <ul>
+          <li>📍 Jl. Citeureup No. 12, Banten</li>
+          <li>📱 WhatsApp: 0812-3456-7890</li>
+          <li>📧 tokopakaiankalcer@gmail.com</li>
+          <li>⏰ Senin–Sabtu, 07.00–18.00 WIB</li>
+        </ul>
+        <div class="sosmed">
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="TikTok">🎵</a>
+          <a href="#" title="Shopee">🛍️</a>
+        </div>
+      </div>
+      <form id="form-kontak" onsubmit="kirimPesan(event)">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" placeholder="Contoh: Budi Santoso" required/>
+        </div>
+        <div class="form-group">
+          <label>Nomor WhatsApp</label>
+          <input type="tel" placeholder="Contoh: 08123456789" required/>
+        </div>
+        <div class="form-group">
+          <label>Pesan</label>
+          <textarea rows="4" placeholder="Tulis pesan kamu di sini..." required></textarea>
+        </div>
+        <button type="submit" class="tombol" style="width:100%;text-align:center">📨 Kirim Pesan</button>
+        <p id="pesan-sukses">✅ Pesan berhasil dikirim, kami akan segera menghubungi Anda.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Toko Pakaian Kalcer — Banten, Indonesia</p>
+    <p>Dibuat dengan <strong>HTML, CSS & JavaScript</strong> 💚</p>
+  </footer>
+
+</div><!-- /main-content -->
+
+<!-- ===== HALAMAN PROFIL ===== -->
+<div class="profil-page" id="profil-page">
+  <div class="profil-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="profil-sidebar">
+      <div class="sidebar-label">Menu</div>
+      <ul class="sidebar-menu">
+        <li class="aktif" onclick="gantiMenuProfil('profil-saya', this)">
+          <span class="menu-icon">👤</span> Profil Saya
+        </li>
+        <li onclick="gantiMenuProfil('riwayat-order', this)">
+          <span class="menu-icon">📋</span> Riwayat Order
+        </li>
+        <li onclick="gantiMenuProfil('ulasan-saya', this)">
+          <span class="menu-icon">⭐</span> Ulasan Saya
+        </li>
+        <li onclick="gantiMenuProfil('tracking-order', this)">
+          <span class="menu-icon">🚚</span> Tracking Order
+        </li>
+        <li onclick="gantiMenuProfil('alamat-saya', this)">
+          <span class="menu-icon">📍</span> Alamat Saya
+        </li>
+        <li onclick="gantiMenuProfil('pengaturan-akun', this)">
+          <span class="menu-icon">⚙️</span> Pengaturan Akun
+        </li>
+        <li onclick="gantiMenuProfil('bantuan', this)">
+          <span class="menu-icon">❓</span> Bantuan
+        </li>
+        <li onclick="keluarProfil()" style="color:#ef4444">
+          <span class="menu-icon">🚪</span> Keluar
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="profil-content" id="profil-content">
+
+      <!-- PROFIL SAYA -->
+      <div id="menu-profil-saya">
+        <!-- Header Card -->
+        <div class="profil-card" style="margin-bottom:20px">
+          <div class="profil-header">
+            <div class="avatar-wrap">
+              <div class="avatar-circle" id="profil-avatar">👤</div>
+              <div class="avatar-cam" title="Ganti foto">📷</div>
+            </div>
+            <div class="profil-nama">
+              <div class="badge-member">Member</div>
+              <h2 id="profil-nama-text">Dinda Putri</h2>
+              <ul class="profil-detail-list">
+                <li>✉️ <span id="profil-email-text">dindaputri@gmail.com</span></li>
+                <li>📱 <span id="profil-telp-text">0812-3456-7890</span></li>
+                <li>📅 <span id="profil-lahir-text">12 Mei 2002</span></li>
+                <li>📍 <span id="profil-lokasi-text">Banten, Indonesia</span></li>
+              </ul>
+            </div>
+            <button class="profil-edit-btn" onclick="bukaEditProfil()">✏️ Edit Profil</button>
+          </div>
+        </div>
+
+        <!-- Statistik -->
+        <div class="profil-stats" style="margin-bottom:20px">
+          <div class="stat-item">
+            <div class="stat-icon">🛍️</div>
+            <div class="stat-num">8</div>
+            <div class="stat-label">Total Order</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">🚚</div>
+            <div class="stat-num">5</div>
+            <div class="stat-label">Pesanan Dikirim</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">Ulasan Dibuat</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">❤️</div>
+            <div class="stat-num">12</div>
+            <div class="stat-label">Produk Disukai</div>
+          </div>
+        </div>
+
+        <!-- Baris bawah -->
+        <div class="profil-bottom-row">
+          <!-- Alamat Utama -->
+          <div class="profil-card">
+            <h3>📍 Alamat Utama <button style="background:none;border:none;cursor:pointer;font-size:1rem;margin-left:auto;color:#9ca3af">⋮</button></h3>
+            <div class="alamat-nama">Rumah <span class="alamat-tag">Utama</span></div>
+            <div class="alamat-teks">
+              Jl. Raya Serang No. 123, Kec. Cipocok Jaya,<br>
+              Kota Serang, Banten 42123<br>
+              Indonesia
+            </div>
+            <div class="alamat-actions">
+              <button class="btn-outline-pink">✏️ Edit Alamat</button>
+              <button class="btn-outline-pink">+ Tambah Alamat</button>
+            </div>
+          </div>
+
+          <!-- Informasi Akun -->
+          <div class="profil-card">
+            <h3>👤 Informasi Akun</h3>
+            <div class="info-row">
+              <span class="label">Email</span>
+              <span class="value" id="info-email">dindaputri@gmail.com</span>
+            </div>
+            <div class="info-row">
+              <span class="label">No. WhatsApp</span>
+              <span class="value" id="info-telp">0812-3456-7890</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Tanggal Lahir</span>
+              <span class="value" id="info-lahir">12 Mei 2002</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Jenis Kelamin</span>
+              <span class="value" id="info-gender">Perempuan</span>
+            </div>
+            <button class="btn-ubah-password" onclick="bukaUbahPassword()">🔒 Ubah Password</button>
+          </div>
+        </div>
+      </div><!-- /menu-profil-saya -->
+
+      <!-- RIWAYAT ORDER -->
+      <div id="menu-riwayat-order" style="display:none">
+        <div class="ro-header-bar">
+          <div>
+            <h2 class="ro-title">Riwayat Order</h2>
+            <p class="ro-sub">Berikut adalah daftar pesanan yang pernah kamu buat.</p>
+          </div>
+          <div class="ro-filter-wrap">
+            <select class="ro-filter" id="ro-filter" onchange="filterRiwayat(this.value)">
+              <option value="semua">Semua Status</option>
+              <option value="Selesai">Selesai</option>
+              <option value="Diproses">Diproses</option>
+              <option value="Dikirim">Dikirim</option>
+            </select>
+          </div>
+        </div>
+        <div class="ro-list" id="ro-list"></div>
+        <p style="text-align:center;color:#6b7280;font-size:.85rem;margin-top:24px">
+          Tidak menemukan pesananmu? <a href="#" style="color:#ec4899;font-weight:600">Hubungi Customer Service</a>
+        </p>
+      </div>
+
+      <!-- ULASAN SAYA -->
+      <div id="menu-ulasan-saya" style="display:none">
+        <div class="ro-header-bar">
+          <div>
+            <h2 class="ro-title">Ulasan Saya</h2>
+            <p class="ro-sub">Ulasan yang pernah kamu tulis untuk produk kami.</p>
+          </div>
+        </div>
+        <div class="ulasan-list" id="ulasan-saya-list"></div>
+      </div>
+
+      <!-- TRACKING ORDER -->
+      <div id="menu-tracking-order" style="display:none">
+        <div id="tracking-list-view">
+          <div class="ro-header-bar">
+            <div>
+              <h2 class="ro-title">Lacak Pesanan</h2>
+              <p class="ro-sub">Pilih pesanan untuk melihat status pengiriman.</p>
+            </div>
+          </div>
+          <div class="ro-list" id="tracking-order-list"></div>
+        </div>
+        <div id="tracking-detail-view" style="display:none">
+          <button class="ro-back-btn" onclick="kembaliKeTrackingList()">← Kembali ke Riwayat Order</button>
+          <div class="track-detail-layout">
+            <!-- LEFT: Order Info -->
+            <div class="track-left-col">
+              <div class="track-order-info-card">
+                <div class="track-info-row">
+                  <div class="track-info-label">No. Order</div>
+                  <div class="track-order-id" id="td-order-id">#KLCER24050123</div>
+                </div>
+                <div class="track-info-row">
+                  <div class="track-info-label">Tanggal Order</div>
+                  <div class="track-info-value" id="td-tanggal">24 Mei 2025, 14:32</div>
+                </div>
+                <div class="track-info-row">
+                  <div class="track-info-label">Metode Pembayaran</div>
+                  <div class="track-info-value" id="td-payment">Transfer Bank BCA</div>
+                </div>
+                <div class="track-info-row">
+                  <div class="track-info-label">Alamat Pengiriman</div>
+                  <div class="track-info-value" id="td-alamat">
+                    <strong>Dinda Putri</strong><br>
+                    Jl. Raya Serang No. 123,<br>
+                    Kecamatan Cipocok Jaya,<br>
+                    Kota Serang, Banten 42123<br>
+                    0812-3456-7890
+                  </div>
+                </div>
+                <button class="tombol tombol-outline" style="width:100%;margin-top:8px;font-size:.85rem" onclick="lihatDetailPesananDariTracking()">Lihat Detail Pesanan</button>
+              </div>
+            </div>
+            <!-- RIGHT: Tracking Info -->
+            <div class="track-right-col">
+              <div class="track-status-card">
+                <h3 style="font-weight:700;font-size:1rem;margin-bottom:20px">Status Pengiriman</h3>
+                <!-- Horizontal stepper -->
+                <div class="track-h-stepper" id="td-stepper"></div>
+                <!-- Shipping info -->
+                <div class="track-shipping-info" id="td-shipping-info">
+                  <h4 style="font-weight:700;font-size:.9rem;margin-bottom:14px">Informasi Pengiriman</h4>
+                  <div class="track-ship-row">
+                    <div>
+                      <div class="track-ship-label">Kurir</div>
+                      <div class="track-ship-val" id="td-kurir">JNE Express</div>
+                    </div>
+                    <div>
+                      <div class="track-ship-label">No. Resi</div>
+                      <div class="track-ship-val" style="display:flex;align-items:center;gap:8px">
+                        <span id="td-resi">JNE1234567890</span>
+                        <button class="track-copy-btn" onclick="salinResi()">Salin</button>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="track-ship-label">Service</div>
+                      <div class="track-ship-val" id="td-service">REG</div>
+                    </div>
+                    <div>
+                      <div class="track-ship-label">Lacak Paket</div>
+                      <div class="track-ship-val">
+                        <a href="#" class="track-lacak-link">Lacak di Website Kurir ↗</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Notes -->
+                <div class="track-notes-box">
+                  <div class="track-notes-label">Catatan</div>
+                  <div class="track-notes-val">Estimasi pengiriman dapat berubah sewaktu-waktu sesuai kondisi di lapangan.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALAMAT SAYA -->
+      <div id="menu-alamat-saya" style="display:none">
+        <div class="profil-card">
+          <h3>📍 Alamat Saya</h3>
+          <div class="riwayat-item" style="margin-bottom:12px">
+            <div class="alamat-nama" style="margin-bottom:4px">Rumah <span class="alamat-tag">Utama</span></div>
+            <div class="alamat-teks">Jl. Raya Serang No. 123, Kec. Cipocok Jaya, Kota Serang, Banten 42123, Indonesia</div>
+            <div class="alamat-actions" style="margin-top:8px">
+              <button class="btn-outline-pink">✏️ Edit</button>
+            </div>
+          </div>
+          <button class="tombol" style="margin-top:8px">+ Tambah Alamat Baru</button>
+        </div>
+      </div>
+
+      <!-- PENGATURAN AKUN -->
+      <div id="menu-pengaturan-akun" style="display:none">
+        <div class="profil-card">
+          <h3>⚙️ Pengaturan Akun</h3>
+          <div class="info-row"><span class="label">Notifikasi Email</span><input type="checkbox" checked style="width:auto"/></div>
+          <div class="info-row"><span class="label">Notifikasi WhatsApp</span><input type="checkbox" checked style="width:auto"/></div>
+          <div class="info-row"><span class="label">Mode Gelap</span><input type="checkbox" style="width:auto"/></div>
+          <button class="btn-ubah-password" onclick="bukaUbahPassword()">🔒 Ubah Password</button>
+        </div>
+      </div>
+
+      <!-- BANTUAN -->
+      <div id="menu-bantuan" style="display:none">
+        <div class="profil-card">
+          <h3>❓ Bantuan</h3>
+          <p style="color:#6b7280;font-size:.9rem;margin-bottom:16px">Hubungi kami jika kamu membutuhkan bantuan.</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li style="font-size:.9rem">📱 WhatsApp: <strong>0812-3456-7890</strong></li>
+            <li style="font-size:.9rem">📧 Email: <strong>tokopakaiankalcer@gmail.com</strong></li>
+            <li style="font-size:.9rem">⏰ Senin–Sabtu, 07.00–18.00 WIB</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div><!-- /profil-page -->
+
+<!-- ===== MODAL DETAIL PRODUK ===== -->
+<div class="overlay" id="overlay-detail">
+<div class="modal modal-lg" id="modal-detail">
+  <button class="modal-close" onclick="tutupModal('overlay-detail')">✕</button>
+  <div class="tabs">
+    <button class="tab aktif" onclick="gantiTab('detail','tab-detail')">Detail Produk</button>
+    <button class="tab" onclick="gantiTab('ulasan','tab-detail')">Ulasan</button>
+  </div>
+  <div id="tab-detail-detail">
+    <div class="detail-grid">
+      <div>
+        <div class="detail-img-big" id="detail-img">👕</div>
+      </div>
+      <div class="detail-info">
+        <h2 id="detail-nama">Kaos Oversize</h2>
+        <div class="rating" id="detail-rating">⭐⭐⭐⭐⭐ <span>(24 ulasan)</span></div>
+        <div class="harga" id="detail-harga">Rp 85.000</div>
+        <p id="detail-desc">Kaos oversize premium.</p>
+        <span class="badge badge-green" id="detail-stok">✅ Stok: 25 pcs</span>
+        <hr class="divider"/>
+        <div id="ukuran-section">
+          <strong style="font-size:.9rem">Pilih Ukuran:</strong>
+          <div class="ukuran-group" id="ukuran-group"></div>
+        </div>
+        <div>
+          <strong style="font-size:.9rem">Jumlah:</strong>
+          <div class="qty-wrap" style="margin-top:8px">
+            <button class="qty-btn" onclick="ubahQty(-1)">−</button>
+            <span class="qty-num" id="qty-num">1</span>
+            <button class="qty-btn" onclick="ubahQty(1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="tombol" onclick="tambahKeKeranjang()" style="flex:1">🛒 Tambah ke Keranjang</button>
+          <button class="tombol tombol-outline" onclick="beliSekarang()" style="flex:1">⚡ Beli Sekarang</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tab-detail-ulasan" style="display:none">
+    <div id="list-ulasan"></div>
+    <div class="review-form">
+      <h3 style="margin-bottom:12px;font-size:1rem">Tulis Ulasanmu</h3>
+      <div class="form-group">
+        <label>Nama</label>
+        <input type="text" id="rev-nama" placeholder="Nama kamu"/>
+      </div>
+      <div>
+        <label style="font-size:.88rem;font-weight:600;color:#374151">Rating</label>
+        <div class="star-input" id="star-input">
+          <span onclick="setBintang(1)">★</span>
+          <span onclick="setBintang(2)">★</span>
+          <span onclick="setBintang(3)">★</span>
+          <span onclick="setBintang(4)">★</span>
+          <span onclick="setBintang(5)">★</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Ulasan</label>
+        <textarea rows="3" id="rev-text" placeholder="Bagaimana pendapatmu tentang produk ini?"></textarea>
+      </div>
+      <button class="tombol" onclick="kirimUlasan()">Kirim Ulasan</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== MODAL KERANJANG ===== -->
+<div class="overlay" id="overlay-keranjang">
+<div class="modal">
+  <button class="modal-close" onclick="tutupModal('overlay-keranjang')">✕</button>
+  <h2>🛒 Keranjang Belanja</h2>
+  <div id="isi-keranjang"></div>
+  <div id="total-keranjang" style="display:none">
+    <div class="total-keranjang">
+      <div class="total-row"><span>Subtotal</span><span id="subtotal-val"></span></div>
+      <div class="total-row"><span>Ongkir</span><span id="ongkir-val"></span></div>
+      <div class="total-row grand"><span>Total</span><span id="total-val"></span></div>
+    </div>
+    <button class="tombol" style="width:100%;margin-top:16px;text-align:center" onclick="mulaicheckout()">Lanjut ke Checkout →</button>
+  </div>
+</div>
+</div>
+
+<!-- ===== MODAL CHECKOUT ===== -->
+<div class="overlay" id="overlay-checkout">
+<div class="modal modal-lg">
+  <button class="modal-close" onclick="tutupModal('overlay-checkout')">✕</button>
+  <h2>Checkout</h2>
+  <div class="step-bar" id="step-bar">
+    <div class="step aktif" id="step-1"><div class="step-num">1</div><div class="step-label">Alamat</div></div>
+    <div class="step" id="step-2"><div class="step-num">2</div><div class="step-label">Pengiriman</div></div>
+    <div class="step" id="step-3"><div class="step-num">3</div><div class="step-label">Pembayaran</div></div>
+    <div class="step" id="step-4"><div class="step-num">4</div><div class="step-label">Selesai</div></div>
+  </div>
+  <div id="checkout-content"></div>
+</div>
+</div>
+
+<!-- ===== CHAT FAB ===== -->
+<button class="chat-fab" onclick="toggleChat()" title="Chat CS">💬<span class="chat-notif" id="chat-notif">1</span></button>
+<div class="chat-box" id="chat-box">
+  <div class="chat-header">
+    <div>
+      <h4>Customer Service 👩‍💼</h4>
+      <div class="status">🟢 Online — Balas dalam menit</div>
+    </div>
+    <button onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-wrap">
+    <input type="text" id="chat-input" placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter')kirimChat()"/>
+    <button class="chat-send" onclick="kirimChat()">➤</button>
+  </div>
+</div>
+
+<!-- ===== MODAL TRACKING ===== -->
+<div class="overlay" id="overlay-tracking">
+<div class="modal modal-sm">
+  <button class="modal-close" onclick="tutupModal('overlay-tracking')">✕</button>
+  <h2>📦 Lacak Pesanan</h2>
+  <div id="tracking-content"></div>
+</div>
+</div>
+
+<!-- ===== MODAL EDIT PROFIL ===== -->
+<div class="overlay" id="overlay-edit-profil">
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="tutupModal('overlay-edit-profil')">✕</button>
+    <h2>✏️ Edit Profil</h2>
+    <div class="form-group">
+      <label>Nama Lengkap</label>
+      <input type="text" id="edit-nama" placeholder="Nama lengkap"/>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="edit-email" placeholder="email@contoh.com"/>
+    </div>
+    <div class="form-group">
+      <label>Nomor WhatsApp</label>
+      <input type="tel" id="edit-telp" placeholder="08xxxxxxxxxx"/>
+    </div>
+    <div class="form-group">
+      <label>Tanggal Lahir</label>
+      <input type="date" id="edit-lahir"/>
+    </div>
+    <div class="form-group">
+      <label>Jenis Kelamin</label>
+      <select id="edit-gender">
+        <option value="Perempuan">Perempuan</option>
+        <option value="Laki-laki">Laki-laki</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Lokasi</label>
+      <input type="text" id="edit-lokasi" placeholder="Contoh: Banten, Indonesia"/>
+    </div>
+    <button class="tombol" style="width:100%" onclick="simpanProfil()">💾 Simpan Perubahan</button>
+  </div>
+</div>
+
+<!-- ===== MODAL UBAH PASSWORD ===== -->
+<div class="overlay" id="overlay-ubah-password">
+  <div class="modal" style="max-width:420px">
+    <button class="modal-close" onclick="tutupModal('overlay-ubah-password')">✕</button>
+    <h2>🔒 Ubah Password</h2>
+    <div class="form-group">
+      <label>Password Lama</label>
+      <input type="password" id="pw-lama" placeholder="Masukkan password lama"/>
+    </div>
+    <div class="form-group">
+      <label>Password Baru</label>
+      <input type="password" id="pw-baru" placeholder="Minimal 8 karakter"/>
+    </div>
+    <div class="form-group">
+      <label>Konfirmasi Password Baru</label>
+      <input type="password" id="pw-konfirmasi" placeholder="Ulangi password baru"/>
+    </div>
+    <button class="tombol" style="width:100%" onclick="simpanPassword()">🔒 Simpan Password</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
